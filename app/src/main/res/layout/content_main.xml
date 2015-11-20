@@ -3,22 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
+
     <Button
         android:id="@+id/scan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="扫描周边蓝牙设备"
-        />
+        android:text="扫描周边蓝牙设备" />
 
     <ListView
         android:id="@+id/list"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-
+    <TextView
+        android:id="@+id/tv"
+        android:text="adsf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

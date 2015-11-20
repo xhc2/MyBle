@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tongmin.myble.util.DebugFile;
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private BluetoothAdapter mBluetoothAdapter;
     private ListView list ;
     private Button bt ;
+    private TextView tv;
+    private String str = "";
     private BluetoothLeService mBluetoothLeService;
     private static final long SCAN_PERIOD = 10000;
     private Handler mHandler = new Handler();
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void findViewById(){
         list = (ListView)findViewById(R.id.list);
         bt = (Button)findViewById(R.id.scan);
+        tv = (TextView)findViewById(R.id.tv);
     }
 
     @Override
@@ -220,7 +224,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
                 //接收到数据的状态
-                Log.e("xhc","接收到的数据"+intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+
+//                Log.e("xhc","接收到的数据"+intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+                str += intent.getStringExtra(BluetoothLeService.EXTRA_DATA);
+                str += "\n\r";
+                tv.setText(str);
             }
         }
     };
@@ -244,20 +252,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 for(BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics){
                     if(gattCharacteristic.getUuid().toString().equals(SampleGattAttributes.DEVICE_CHARACTER)){
                         //找到了对应的服务
-                        Log.e("xhc","找到了对应的服务");
-                         if((gattCharacteristic.getProperties() | BluetoothGattCharacteristic.PROPERTY_NOTIFY)>0){
-                            mBluetoothLeService.setCharacteristicNotification(gattCharacteristic,true);
-                             mNotifyCharacteristic = gattCharacteristic;
-                             Log.e("xhc","直接通知");
-                         }
-                        else if((gattCharacteristic.getProperties() | BluetoothGattCharacteristic.PROPERTY_READ)>0){
+
+                        if((gattCharacteristic.getProperties() | BluetoothGattCharacteristic.PROPERTY_READ)>0){
                             if(mNotifyCharacteristic != null){
                                 mBluetoothLeService.setCharacteristicNotification(gattCharacteristic,false);
                                 mNotifyCharacteristic = null;
                             }
-                             Log.e("xhc","read读取");
                              mBluetoothLeService.readCharacteristic(gattCharacteristic);
                          }
+                        if((gattCharacteristic.getProperties() | BluetoothGattCharacteristic.PROPERTY_NOTIFY)>0){
+                            mBluetoothLeService.setCharacteristicNotification(gattCharacteristic,true);
+                            mNotifyCharacteristic = gattCharacteristic;
+                        }
                     }
                 }
             }
