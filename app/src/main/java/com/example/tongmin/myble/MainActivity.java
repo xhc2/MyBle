@@ -36,6 +36,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * https://developer.bluetooth.org/TechnologyOverview/Pages/GATT.aspx
+ * gatt 描述
+ *
+ * https://developer.bluetooth.org/gatt/descriptors/Pages/DescriptorViewer.aspx?u=org.bluetooth.descriptor.gatt.client_characteristic_configuration.xml
+ * BluetoothGattDescriptor 的 Client Characteristic Configuration描述
+ *
+ * http://developer.bluetooth.cn/libs/Cn/Specifi/GATT/2014/0117/53.html
+ * Descriptor  的描述
+ */
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private static final int REQUEST_ENABLE_BT = 1;
     private BluetoothAdapter mBluetoothAdapter;
